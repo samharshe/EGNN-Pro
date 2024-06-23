@@ -40,7 +40,7 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         model.train()
         
         # dummy variable to track loss every 100 batches
-        zebra = 0
+        batch_counter = 0
         
         # iterate through test_dataloader        
         for data in train_dataloader:
@@ -71,15 +71,15 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
             optimizer.step()
             
             # log loss every 100 batches
-            if zebra == 0:
+            if batch_counter == 0:
                 # log losses
                 wandb.log({"train_losses": loss.item()})
                 wandb.log({"E_train_losses": E_loss.item()})
                 wandb.log({"F_train_losses": F_loss.item()})
                 # log learning rate
                 wandb.log({"learning_rates": optimizer.param_groups[0]['lr']})
-            zebra+=1
-            zebra%=100
+            batch_counter+=1
+            batch_counter%=100
         
         # VAL
         epoch_losses = []
