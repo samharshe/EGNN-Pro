@@ -113,7 +113,7 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         epoch_mean_loss = torch.mean(torch.tensor(epoch_losses)).item()
         epoch_mean_E_loss = torch.mean(torch.tensor(epoch_E_losses)).item()
         epoch_mean_F_loss = torch.mean(torch.tensor(epoch_F_losses)).item()
-        wandb.log({"epoch_mean_loss": epoch_mean_loss, "epoch_mean_E_loss": epoch_mean_E_loss, "epoch_mean_F_loss": epoch_mean_F_loss})
+        wandb.log({"epoch_mean_losses": epoch_mean_loss, "epoch_mean_E_losses": epoch_mean_E_loss, "epoch_mean_F_losses": epoch_mean_F_loss})
         
         # print out results of epoch
         print(f'EPOCH {epoch+1} OF {num_epochs} | VAL MEAN LOSS: {epoch_mean_loss}')
