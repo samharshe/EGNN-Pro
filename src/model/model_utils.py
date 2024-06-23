@@ -1,12 +1,9 @@
-import torch
+import torch, os, sys
 from torch import Tensor
-from torch.nn import MSELoss
 from torch_geometric.nn.conv import MessagePassing
 from torch.optim import Optimizer, SGD
 import matplotlib.pyplot as plt
 from typing import Callable
-import os
-import sys
 sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/data/get'))
 from data_get_utils import get_mini_dataloader
 
@@ -38,7 +35,7 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
     optimizer = SGD(model.parameters())
     
     # MSE for maximal simplicity
-    loss_fn = MSELoss()
+    loss_fn = torch.nn.MSELoss()
         
     # track losses
     losses = []

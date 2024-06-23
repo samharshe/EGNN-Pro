@@ -31,6 +31,7 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     
     # test statistics using MAE for comparison with other benchmarks
     total_absolute_loss = 0
+    
     # mean absolute error 
     absolute_loss_fn = torch.nn.L1Loss()    
     
@@ -68,8 +69,8 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
         F_losses.append(F_loss.item())
         
     # calculate and log test mean losses
-    # very slightly incorrect in the case that batch_size does not divide len(test_dataloader.dataset)
-    # this is properly accounted for in MAE but is not worth properly accounting for in these statistics
+    # very slightly incorrect in case batch_size does not divide len(test_dataloader.dataset)
+    # this is properly accounted for in mean_absolute_loss but is not worth properly accounting for in these statistics
     mean_loss = torch.mean(torch.tensor(losses)).item()
     wandb.log({'test_mean_loss': mean_loss})
     mean_E_loss = torch.mean(torch.tensor(E_losses)).item()
