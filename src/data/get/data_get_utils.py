@@ -1,4 +1,5 @@
 import torch
+from torch import manual_seed
 from torch_geometric.datasets import MD17
 from torch_geometric.loader import DataLoader
 from torch_geometric.data import Dataset
@@ -24,7 +25,7 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
         self-explanatory.
     """
     # reproducibility
-    torch.manual_seed(2002)
+    manual_seed(2002)
     
     # make sure the splits make sense
     assert train_split + val_split + test_split == 1, f"train_split, val_split, and test_split must sum to 1. got: {train_split + val_split + test_split}"
@@ -65,7 +66,7 @@ def get_dataset(version: str, molecule: str, train_split: float, val_split: floa
         proportion of dataset to be allocated to val dataloader.
     """
     # reproducibility
-    torch.manual_seed(2002)
+    manual_seed(2002)
     
     # make sure we are doing everything with the whole dataset
     assert train_split + val_split + test_split == 1, f"train_split, val_split, and test_split must sum to 1. got: {train_split + val_split + test_split}"
@@ -99,7 +100,7 @@ def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size:
         self-explanatory.
     """
     # reproducibility
-    torch.manual_seed(2002)
+    manual_seed(2002)
     
     # load in the dataset
     dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')

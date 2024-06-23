@@ -1,11 +1,7 @@
-import torch
-from torch.nn import L1Loss
+import torch, sys, os, wandb
 from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.loader import DataLoader
-import wandb
 from typing import Callable, Dict
-import sys
-import os
 sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model'))
 from model_utils import F_loss_fn
 
@@ -36,7 +32,7 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     # test statistics using MAE for comparison with other benchmarks
     total_absolute_loss = 0
     # mean absolute error 
-    absolute_loss_fn = L1Loss()    
+    absolute_loss_fn = torch.nn.L1Loss()    
     
     # iterate through test_dataloader        
     for data in test_dataloader:
