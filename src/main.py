@@ -58,3 +58,6 @@ train_dataloader, val_dataloader, test_dataloader = get_dataloaders(version='apr
 # train and evaluate model
 train(model=model, optimizer=optimizer, scheduler=scheduler, loss_fn=loss_fn, train_dataloader=train_dataloader, val_dataloader=val_dataloader, rho=config['rho'], num_epochs=config['num_epochs'], name=config['name'])
 evaluate(model=model, loss_fn=loss_fn, test_dataloader=test_dataloader, rho=config['rho'])
+
+# end wandb run
+wandb.finish()

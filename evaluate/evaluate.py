@@ -80,6 +80,3 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     # print final results
     print(f'TEST MEAN LOSS: {mean_loss}')
     print(f'TEST MEAN ABSOLUTE LOSS: {mean_absolute_loss}')
-    
-    # end wandb run
-    wandb.finish()
