@@ -72,12 +72,8 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
             
             # log loss every 100 batches
             if batch_counter == 0:
-                # log losses
-                wandb.log({"train_losses": loss.item()})
-                wandb.log({"E_train_losses": E_loss.item()})
-                wandb.log({"F_train_losses": F_loss.item()})
-                # log learning rate
-                wandb.log({"learning_rates": optimizer.param_groups[0]['lr']})
+                # log losses and learning rate
+                wandb.log({"train_losses": loss.item(), "E_train_losses": E_loss.item(), "F_train_losses": F_loss.item(), "learning_rates": optimizer.param_groups[0]['lr']})
             batch_counter+=1
             batch_counter%=100
         
@@ -90,7 +86,7 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         model.eval()
         
         # iterate through val_dataloader
-        for data in val_dataloadre:
+        for data in val_dataloader:
             # targets
             E = data.energy
             F = data.force
@@ -115,11 +111,9 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         
         # calculate and log mean losses from this epoch
         epoch_mean_loss = torch.mean(torch.tensor(epoch_losses)).item()
-        wandb.log({"epoch_mean_loss": epoch_mean_loss})
         epoch_mean_E_loss = torch.mean(torch.tensor(epoch_E_losses)).item()
-        wandb.log({"epoch_mean_E_loss": epoch_mean_E_loss})
         epoch_mean_F_loss = torch.mean(torch.tensor(epoch_F_losses)).item()
-        wandb.log({"epoch_mean_F_loss": epoch_mean_F_loss})
+        wandb.log({"epoch_mean_loss": epoch_mean_loss, "epoch_mean_E_loss": epoch_mean_E_loss, "epoch_mean_F_loss": epoch_mean_F_loss})
         
         # print out results of epoch
         print(f'EPOCH {epoch+1} OF {num_epochs} | VAL MEAN LOSS: {epoch_mean_loss}')

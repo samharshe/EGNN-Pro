@@ -72,15 +72,10 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     # very slightly incorrect in case batch_size does not divide len(test_dataloader.dataset)
     # this is properly accounted for in mean_absolute_loss but is not worth properly accounting for in these statistics
     mean_loss = torch.mean(torch.tensor(losses)).item()
-    wandb.log({'test_mean_loss': mean_loss})
     mean_E_loss = torch.mean(torch.tensor(E_losses)).item()
-    wandb.log({'test_mean_E_loss': mean_E_loss})
     mean_F_loss = torch.mean(torch.tensor(F_losses)).item()
-    wandb.log({'test_mean_F_loss': mean_F_loss})
-
-    # calculate and log test mean absolute error
     mean_absolute_loss = float(total_absolute_loss) / len(test_dataloader.dataset)
-    wandb.log({'absolute_loss': mean_absolute_loss})
+    wandb.log({'test_mean_loss': mean_loss, 'test_mean_E_loss': mean_E_loss, 'test_mean_F_loss': mean_F_loss, 'test_mean_absolute_loss': mean_absolute_loss})
     
     # print final results
     print(f'TEST MEAN LOSS: {mean_loss}')
