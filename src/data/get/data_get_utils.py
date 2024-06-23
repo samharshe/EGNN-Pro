@@ -105,7 +105,7 @@ def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size:
     dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
 
     # make mini_dataset out of dataset
-    mini_dataset = random_split(dataset, [num_items])
+    mini_dataset, _ = random_split(dataset, [num_items, len(dataset)-num_items])
     
     # make min_dataloader out of mini_dataset
     mini_dataloader = DataLoader(mini_dataset, batch_size=batch_size)

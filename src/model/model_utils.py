@@ -32,7 +32,7 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
     dataloader = get_mini_dataloader(version='apricot', molecule='benzene', num_items=1024, batch_size=32)
     
     # SGD for maximal simplicity
-    optimizer = SGD(model.parameters())
+    optimizer = SGD(model.parameters(), lr=0.001)
     
     # MSE for maximal simplicity
     loss_fn = torch.nn.MSELoss()

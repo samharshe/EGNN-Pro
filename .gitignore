@@ -1,2 +1,6 @@
 # too big to push to GitHub
 data/*
+
+# gross and annoying
+src/model/__pycache__
+src/data/get/__pycache__

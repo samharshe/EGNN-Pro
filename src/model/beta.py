@@ -1,7 +1,9 @@
-import torch
+import torch, sys, os
 from torch.nn import Embedding, Linear
 from torch_geometric.nn import global_add_pool
+from torch_geometric.nn.conv import MessagePassing
 from model_utils import gaussian_rbf
+# why do i have to do model.model_utils ? i am already in the directory `model`
 
 class Beta(MessagePassing):
     """fka EGNN2. 32-dimensional embedding with one round of message passing.
