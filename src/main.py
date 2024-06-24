@@ -29,28 +29,19 @@ config = {
 # initialize the star of the show
 model = Delta()
 
-# I couldn't think of a concise way to initialize optimizer, scheduler, and loss_fn based on the contents of config
-# this is all for show anyway, but it would be nice to have a natural way of doing this that generalizes when I am selecting hyperparameters more carefully
+# initialize optimizer, scheduler, loss function
 optimizer = torch.optim.Adam(model.parameters(), lr=config['base_learning_rate'])
-
-# initialize scheduler
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
     optimizer=optimizer, 
     mode=config['scheduler_mode'], 
     factor=config['scheduler_factor'], 
     patience=config['scheduler_patience'], 
-    threshold=config['scheduler_threshold']
-    )
-
-# initialize loss function
+    threshold=config['scheduler_threshold'])
 loss_fn = torch.nn.MSELoss()
 
 # wandb
 os.environ['WANDB_NOTEBOOK_NAME'] = 'main.py'
-wandb.init(
-    project = "EGNN",
-    config = config,
-)
+wandb.init(project="EGNN", config=config)
 
 # create dataloaders
 train_dataloader, val_dataloader, test_dataloader = get_dataloaders(version='apricot', molecule='benzene', train_split=0.8, val_split=0.1, test_split=0.1, batch_size=32)
