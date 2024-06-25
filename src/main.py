@@ -14,7 +14,8 @@ torch.manual_seed(2002)
 config = {
     'name': 'Delta',
     'base_learning_rate': 0.001,
-    'num_epochs': 5,
+    'max_epochs': 20,
+    'early_stop_patience': 2,
     'optimizer': 'Adam',
     'scheduler': 'ReduceLROnPlateau',
     'scheduler_mode': 'min',
@@ -23,8 +24,7 @@ config = {
     'scheduler_threshold': 0,
     'training_loss_fn': 'MSELoss',
     'rho': 1-1e-1,
-    'batch_size': 32
-}
+    'batch_size': 32}
 
 # initialize the star of the show
 model = Delta()
@@ -47,7 +47,7 @@ wandb.init(project="EGNN", config=config)
 train_dataloader, val_dataloader, test_dataloader = get_dataloaders(version='apricot', molecule='benzene', train_split=0.8, val_split=0.1, test_split=0.1, batch_size=32)
 
 # train and evaluate model
-train(model=model, optimizer=optimizer, scheduler=scheduler, loss_fn=loss_fn, train_dataloader=train_dataloader, val_dataloader=val_dataloader, rho=config['rho'], num_epochs=config['num_epochs'], name=config['name'])
+train(model=model, optimizer=optimizer, scheduler=scheduler, loss_fn=loss_fn, train_dataloader=train_dataloader, val_dataloader=val_dataloader, rho=config['rho'], max_epochs=config['max_epochs'], early_stop_patience=config['early_stop_patience'], name=config['name'])
 evaluate(model=model, loss_fn=loss_fn, test_dataloader=test_dataloader, rho=config['rho'])
 
 # end wandb run

@@ -7,7 +7,7 @@ from typing import Callable, Dict
 sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model'))
 from model_utils import F_loss_fn
 
-def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, loss_fn: Callable, train_dataloader: DataLoader, val_dataloader: DataLoader, rho: float, num_epochs: int, name: str) -> None:
+def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, loss_fn: Callable, train_dataloader: DataLoader, val_dataloader: DataLoader, rho: float, max_epochs: int, early_stop_patience: int, name: str) -> None:
     """trains model on dataloader, saves weights of the best-performing model, and logs ongoing results through wandb.
     
     parameters
@@ -26,21 +26,27 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         self-explanatory.
     rho : float
         loss = (1-rho)*E_loss + rho*F_loss.
-    num_epochs : int
+    max_epochs : int
         self-explanatory.
+    early_stop_patience : int
+        if loss does not decrease for early_stop_patience consecutive epochs, training stops.
     name : str
         best-performing weights are saved to f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/weights/{name}.pth'.
     """
     # keep track of the best val performance to know when to save weights
     val_min_loss = sys.float_info.max
 
+
     # training loop occurs num_epochs times
-    for epoch in range(num_epochs):
+    for epoch in range(max_epochs):
         # track gradients
         model.train()
         
         # dummy variable to track loss every 100 batches
         batch_counter = 0
+        
+        # variable to count up to early_stop_patience
+        epochs_increasing_loss = 0
         
         # iterate through test_dataloader        
         for data in train_dataloader:
@@ -116,12 +122,17 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         wandb.log({"epoch_mean_losses": epoch_mean_loss, "epoch_mean_E_losses": epoch_mean_E_loss, "epoch_mean_F_losses": epoch_mean_F_loss})
         
         # print out results of epoch
-        print(f'EPOCH {epoch+1} OF {num_epochs} | VAL MEAN LOSS: {epoch_mean_loss}')
+        print(f'EPOCH {epoch+1} OF {max_epochs} | VAL MEAN LOSS: {epoch_mean_loss}')
         
         # if this is best val performance yet, save weights
         if val_min_loss > epoch_mean_loss:
             val_min_loss = epoch_mean_loss
             torch.save(model, f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/weights/{name}.pth')
+            epochs_increasing_loss = 0
+        else: 
+            epochs_increasing_loss += 1
+            if epochs_increasing_loss >= early_stop_patience:
+                return
             
         # update lr based on mean loss of previous epoch
         scheduler.step(epoch_mean_loss)
