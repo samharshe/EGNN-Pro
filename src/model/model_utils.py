@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from typing import Callable
 sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/data/get'))
 from data_get_utils import get_mini_dataloader
+import math
 
 def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, batch_size:int=32, num_epochs:int=10) -> None:
     """puts the model through a very brief training run to check for elementary bugs, making a matplotlib plot of loss.
@@ -139,3 +140,29 @@ def F_loss_fn(F: Tensor, F_hat: Tensor, loss_fn: Callable) -> Tensor:
     
     # return F_loss
     return F_loss
+
+def bessel_rbf(x: Tensor, n: int, r_cut: float) -> Tensor:
+    """takes in a tensor representing distance and expands it into a vector (tensor) in a Bessel radial basis.
+    
+    formula for a Bessel radial basis function: 
+    
+    ..math:: 
+    
+        \\sin(\\frac{(n\\pi)}{r_{\\mathrm{cut}}} \\Vert \\vec{r}_{ij} \\Vert) / \\Vert \\vec{r}_{ij} \\Vert.
+        
+    notation consistent with page 4 of https://arxiv.org/pdf/2102.03150, which follows the lead of page 5 of https://arxiv.org/pdf/2003.03123.
+        
+    this method creates `n` Bessel radial basis functions and returns a vector (tensor) whose i-th element is the value of `x` written in the i-th basis element.
+    
+    parameters
+    ----------
+    x : Tensor
+        1-element tensor, representing distance, to be expanded in the Bessel radial basis.
+    n : int
+        cardinality of Bessel basis.
+    r_cut : float
+        cutoff distance, representing the maximum distance between two connected nodes.
+    """
+    ns = torch.arange(1, n)
+    
+    return torch.div(torch.sin(torch.div(n * x * math.pi), r_cut), x)

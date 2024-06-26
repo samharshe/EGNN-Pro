@@ -38,9 +38,9 @@ class MakeEdgeAttributes(T.BaseTransform):
     def __call__(self, data: Any) -> Any:
         idx1 = data.edge_index[0]
         idx2 = data.edge_index[1]
-        data.edge_vectors = data.pos[idx1] - data.pos[idx2]
-        data.edge_vectors_length = torch.norm(data.edge_vectors, dim=1)
-        data.unit_edge_vectors = torch.div(data.edge_vectors, data.edge_vectors_length.view(-1,1))
+        data.edge_vec = data.pos[idx1] - data.pos[idx2]
+        data.edge_vec_length = torch.norm(data.edge_vec, dim=1)
+        data.unit_edge_vec = torch.div(data.edge_vec, data.edge_vec_length.view(-1,1))
         
         return data
     

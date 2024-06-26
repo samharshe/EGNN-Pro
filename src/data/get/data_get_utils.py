@@ -84,6 +84,25 @@ def get_datasets(version: str, molecule: str, train_split: float, val_split: flo
     # return Datasets
     return train_dataset, val_dataset, test_dataset
 
+def get_dataset(version: str, molecule: str) -> Dataset:
+    """returns a Dataset object as specified in the function call.
+    
+    parameters
+    ----------
+    version : str
+         which of pre-processed datasets (raw, apricot, brisket, etc.) to fetch.
+    molecule : str
+        which of molecule datasets (benzene, uracil, aspirin) to fetch.
+    """
+    # reproducibility
+    manual_seed(2002)
+    
+    # load in dataset
+    dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
+
+    # return Dataset
+    return dataset
+
 def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size: int) -> DataLoader:
     """returns a DataLoader object as specified in the function call; especially useful for getting small DataLoader objects to use in experimentation.
     

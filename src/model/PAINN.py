@@ -16,6 +16,7 @@ class PAINNMessage(MessagePassing):
     def forward(self, data):
         edge_index = data.edge_index
         x = self.propagate(edge_index, x=data)
+        return
         
     def message(self, x_i, x_j, edge_attr):
         s_j = x_j.s_j
