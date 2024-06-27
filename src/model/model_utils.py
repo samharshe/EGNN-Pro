@@ -163,6 +163,6 @@ def bessel_rbf(x: Tensor, n: int, r_cut: float) -> Tensor:
     r_cut : float
         cutoff distance, representing the maximum distance between two connected nodes.
     """
-    ns = torch.arange(1, n)
+    ns = torch.arange(1, n+1).view(n,1)
     
-    return torch.div(torch.sin(torch.div(n * x * math.pi), r_cut), x)
+    return torch.div(torch.sin(torch.div(ns * x * math.pi, r_cut)), x)
