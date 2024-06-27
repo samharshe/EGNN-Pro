@@ -178,8 +178,8 @@ def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
         
     for :math:`x \leq r_{\mathrm{cut}}`, and :math:`0` for :math:`x > r_{\mathrm{cut}}`.
     
-    it is desirable to have the value of the basis for all values greater than `r_cut` to be 0 without introducing a discontinuity at `r_cut`.
-    cosine cutoff maps 0 to 1, leaving distances near 0 minimally affected, and maps `r_cut` to 0, giving distances slightly smaller than `r_cut` values near 0. 
+    it is desirable to set the value of the basis for all values greater than `r_cut` to 0 without introducing a discontinuity at `r_cut`.
+    cosine cutoff maps 0 to 1, leaving distances near 0 minimally affected, and maps `r_cut` to 0, giving distances slightly smaller than `r_cut` values near 0. it maps values greater than `r_cut` uniformly to 0.
     it is :math:`C^\\infty`, which allows it to interact nicely with all basis functions.
     
     parameters
