@@ -163,11 +163,37 @@ def bessel_rbf(x: Tensor, n: int, r_cut: float) -> Tensor:
     r_cut : float
         cutoff distance, representing the maximum distance between two connected nodes.
     """
-    ns = torch.arange(1, n+1).view(n,1)
+    ns = torch.arange(1, n+1)
     
     return torch.div(torch.sin(torch.div(ns * x * math.pi, r_cut)), x)
 
 def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
+    """takes in a tensor representing distance and returns its coefficient under a cosine cutoff.
+    
+    formula for a cosine cutoff function:
+    
+    ..math::
+    
+        0.5 \\cos(\\frac{\\pi x}{r_{\mathrm{cut}}} + 1)
+        
+    for :math:`x \leq r_{\mathrm{cut}}`, and :math:`0` for :math:`x > r_{\mathrm{cut}}`.
+    
+    it is desirable to have the value of the basis for all values greater than `r_cut` to be 0 without introducing a discontinuity at `r_cut`.
+    cosine cutoff maps 0 to 1, leaving distances near 0 minimally affected, and maps `r_cut` to 0, giving distances slightly smaller than `r_cut` values near 0. 
+    it is :math:`C^\\infty`, which allows it to interact nicely with all basis functions.
+    
+    parameters
+    ----------
+    x : Tensor
+        1-element tensor, representing basis, whose coefficient under a cosine cutoff is to be calculated.
+    r_cut : float
+        maximum distance between connected nodes.
+    """
+    # f(0) = 1 and f(r_cut) = 0 smoothly
     cutoff_distances = 0.5 * (torch.cos(math.pi * x / r_cut) + 1)
+    
+    # truncate everything beyond r_cut
     cutoff_distances[x > r_cut] = 0.0
+    
+    # return
     return cutoff_distances
