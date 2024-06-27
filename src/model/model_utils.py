@@ -166,3 +166,8 @@ def bessel_rbf(x: Tensor, n: int, r_cut: float) -> Tensor:
     ns = torch.arange(1, n+1).view(n,1)
     
     return torch.div(torch.sin(torch.div(ns * x * math.pi, r_cut)), x)
+
+def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
+    cutoff_distances = 0.5 * (torch.cos(math.pi * x / r_cut) + 1)
+    cutoff_distances[x > r_cut] = 0.0
+    return cutoff_distances
