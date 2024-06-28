@@ -197,3 +197,8 @@ def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
     
     # return
     return cutoff_distances
+
+def normalize(x: Tensor) -> Tensor:
+    """
+    """
+    
