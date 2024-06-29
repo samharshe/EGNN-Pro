@@ -2,8 +2,5 @@
 data/*
 
 # gross and annoying
-src/model/__pycache__
-src/data/get/__pycache__
-train/__pycache__
-evaluate/__pycache__
+**/__pycache__/
 wandb/
