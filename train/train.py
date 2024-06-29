@@ -4,7 +4,7 @@ from torch_geometric.loader import DataLoader
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 from typing import Callable, Dict
-sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model'))
+sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model/utils'))
 from model_utils import F_loss_fn
 
 def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, loss_fn: Callable, train_dataloader: DataLoader, val_dataloader: DataLoader, rho: float, max_epochs: int, early_stop_patience: int, name: str) -> None:

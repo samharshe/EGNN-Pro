@@ -4,9 +4,7 @@ from torch_geometric.nn.conv import MessagePassing
 from torch.optim import Optimizer, SGD
 import matplotlib.pyplot as plt
 from typing import Callable
-sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/data/get'))
-from data_get_utils import get_mini_dataloader
-import math
+from utils.data_get_utils import get_mini_dataloader
 
 def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, batch_size:int=32, num_epochs:int=10) -> None:
     """puts the model through a very brief training run to check for elementary bugs, making a matplotlib plot of loss.

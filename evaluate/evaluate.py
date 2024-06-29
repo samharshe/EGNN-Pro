@@ -2,7 +2,7 @@ import torch, sys, os, wandb
 from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.loader import DataLoader
 from typing import Callable, Dict
-sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model'))
+sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model/utils'))
 from model_utils import F_loss_fn
 
 def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoader, rho: float) -> None:
