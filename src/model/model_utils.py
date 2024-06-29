@@ -72,7 +72,7 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
             
             # track losses
             losses.append(loss.item())
-    
+            
     # make plot of losses to check for convergence
     plt.plot(range(len(losses)), losses)
     plt.show()
@@ -197,8 +197,3 @@ def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
     
     # return
     return cutoff_distances
-
-def normalize(x: Tensor) -> Tensor:
-    """
-    """
-    
