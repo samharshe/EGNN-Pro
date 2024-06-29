@@ -25,6 +25,10 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
     num_epochs : int, optional
         default : 10
         self-explanatory.
+    
+    returns
+    -------
+    None; prints matplotlib plot of loss.
     """
     
     # make dataloader
@@ -76,7 +80,7 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
     plt.show()
     
 def gaussian_rbf(x: Tensor, sigma: float = 0.05, c_min: float = 0, c_max: float = 1.6, num_c: int = 8) -> Tensor:
-    """takes in a tensor representing distance and expands it into a vector (tensor) in a Gaussian radial basis.
+    """takes in a tensor representing distance and expands it into a vector (Tensor) in a Gaussian radial basis.
     
     formula for a Gaussial radial basis function: 
     
@@ -103,6 +107,10 @@ def gaussian_rbf(x: Tensor, sigma: float = 0.05, c_min: float = 0, c_max: float 
     num_c : int, optional
         default : 8
         size of the basis.
+    
+    returns
+    -------
+    vector (Tensor) representing input distance in a Gaussian radial basis, as specified in function call.
     """
     # size of the increments
     c_inc = c_max / num_c
@@ -126,6 +134,10 @@ def F_loss_fn(F: Tensor, F_hat: Tensor, loss_fn: Callable) -> Tensor:
         dimensions are [3, num_atoms].
     loss_fn : Callable
         takes in [num_atoms] tensor and returns 1-item loss tensor.
+        
+    returns:
+    --------
+    1-item Tensor containing loss.
     """
     # avoid bugs when the parameters do not make sense
     assert F.size() == F_hat.size(), f'expected F and F_hat to be the same size. got F.size()={F.size()} and F_hat.size()={F_hat.size()}'
@@ -160,10 +172,19 @@ def bessel_rbf(x: Tensor, n: int, r_cut: float) -> Tensor:
         cardinality of Bessel basis.
     r_cut : float
         cutoff distance, representing the maximum distance between two connected nodes.
+        
+    returns
+    -------
+    vector (Tensor) representing input distance in a Bessel radial basis, as specified in function call.
     """
+    # frequency tensor of length n
     ns = torch.arange(1, n+1).view(1,-1).float()
     
-    return torch.div(torch.sin(torch.div(torch.matmul(x,ns) * torch.pi, r_cut)), x)
+    # output as defined in Bessel radial basis function equation
+    out = torch.div(torch.sin(torch.div(torch.matmul(x,ns) * torch.pi, r_cut)), x)
+    
+    # return
+    return out
 
 def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
     """takes in a tensor representing distance and returns its coefficient under a cosine cutoff.
@@ -186,6 +207,10 @@ def cosine_cutoff(x: Tensor, r_cut: float) -> Tensor:
         1-element tensor, representing basis, whose coefficient under a cosine cutoff is to be calculated.
     r_cut : float
         maximum distance between connected nodes.
+        
+    returns
+    -------
+    Tensor representing coefficient of input distance under cosine cutoff with `r_cut` as specified in function call.
     """
     # f(0) = 1 and f(r_cut) = 0 smoothly
     cutoff_distances = 0.5 * (torch.cos(torch.pi * x / r_cut) + 1)

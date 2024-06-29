@@ -5,8 +5,8 @@ from torch_geometric.data import Dataset
 from torch.utils.data import random_split
 from typing import Tuple
 
-def get_dataloaders(version: str, molecule: str, train_split: float, val_split: float, test_split: float, batch_size: int) -> Tuple[DataLoader, ...]:
-    """returns a 3-tuple of train, val, and test DataLoader objects as specified in the function call.
+def get_dataloaders(version: str, molecule: str, train_split: float, val_split: float, test_split: float, batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoader]:
+    """returns a 3-tuple of train, val, and test DataLoader objects as specified in function call.
     
     parameters
     ----------
@@ -22,6 +22,10 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
         proportion of dataset to be allocated to val dataloader.
     batch_size : int
         self-explanatory.
+        
+    returns
+    -------
+    3-tuple of train, val, and test loader objects as specified in function call.
     """
     # reproducibility
     manual_seed(2002)
@@ -49,7 +53,7 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
     return train_loader, val_loader, test_loader
 
 def get_datasets(version: str, molecule: str, train_split: float, val_split: float, test_split: float) -> Tuple[Dataset, ...]:
-    """returns a 3-tuple of train, val, and test Dataset objects as specified in the function call.
+    """returns a 3-tuple of train, val, and test Dataset objects as specified in function call.
     
     parameters
     ----------
@@ -63,6 +67,10 @@ def get_datasets(version: str, molecule: str, train_split: float, val_split: flo
         proportion of dataset to be allocated to val dataloader.
     test_split : float
         proportion of dataset to be allocated to val dataloader.
+        
+    returns
+    -------
+    3-tuple of train, val, and test Dataset objects as specified in function call.
     """
     # reproducibility
     manual_seed(2002)
@@ -93,6 +101,10 @@ def get_dataset(version: str, molecule: str) -> Dataset:
          which of pre-processed datasets (raw, apricot, brisket, etc.) to fetch.
     molecule : str
         which of molecule datasets (benzene, uracil, aspirin) to fetch.
+        
+    returns
+    -------
+    Dataset object as specified in the function call.
     """
     # reproducibility
     manual_seed(2002)
@@ -104,7 +116,7 @@ def get_dataset(version: str, molecule: str) -> Dataset:
     return dataset
 
 def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size: int) -> DataLoader:
-    """returns a DataLoader object as specified in the function call; especially useful for getting small DataLoader objects to use in experimentation.
+    """returns a DataLoader object as specified in function call; especially useful for getting small DataLoader objects to use in experimentation.
     
     parameters
     ----------
@@ -116,6 +128,10 @@ def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size:
         self-explanatory. 
     batch_size : int
         self-explanatory.
+        
+    returns
+    -------
+    DataLoader object as specified in function call.
     """
     # reproducibility
     manual_seed(2002)
