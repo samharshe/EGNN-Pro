@@ -2,6 +2,7 @@ import torch
 from torch.nn import Module, Linear, SiLU, Embedding
 from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.nn import global_add_pool
+from .utils.model_utils import bessel_rbf, cosine_cutoff
 
 # Mini PAINN
 class MPAINNPrediction(Module):

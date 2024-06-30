@@ -2,8 +2,7 @@ import torch, sys, os, wandb
 from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.loader import DataLoader
 from typing import Callable, Dict
-sys.path.append(os.path.abspath('/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/src/model/utils'))
-from model_utils import F_loss_fn
+from src.model.utils.model_utils import F_loss_fn
 
 def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoader, rho: float) -> None:
     """evaluates model on dataloader and logs results via wandb.
@@ -20,6 +19,10 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
         self-explanatory.
     rho : float
         loss = (1-rho)*E_loss + rho*F_loss.
+    
+    returns
+    -------
+    None; saves best-performing weights.
     """
     # do not track gradients
     model.eval()

@@ -2,7 +2,7 @@ import torch
 from torch.nn import Embedding, Linear, MSELoss, SiLU
 from torch_geometric.nn import global_add_pool
 from torch_geometric.nn.conv import MessagePassing
-from model_utils import gaussian_rbf
+from .utils.model_utils import gaussian_rbf
 
 class Delta(MessagePassing):
     """fka EGNN4. 64-dimensional embedding with SiLU activation and three rounds of message passing.

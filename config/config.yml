@@ -1,0 +1,27 @@
+name: Delta
+
+hyperparameters:
+    scheduler:
+      name: ReduceLROnPlateau
+      mode: min
+      factor: 0.32
+      patience: 1
+      threshold: 0
+    training:
+      max_epochs: 20
+      early_stop_patience: 2
+      batch_size: 32
+      loss_fn:
+        name: MSELoss
+        rho: !!float 1-1e-1
+    optimizer:
+      name: Adam
+      base_learning_rate: 0.001
+    
+data:
+  version: apricot
+  molecule: benzene
+  splits:
+    train_split: 0.8
+    val_split: 0.1
+    test_split: 0.1
