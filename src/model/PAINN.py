@@ -5,7 +5,7 @@ from torch_geometric.nn import global_add_pool
 from .utils.model_utils import bessel_rbf, cosine_cutoff
 
 # Mini PAINN
-class MPAINNPrediction(Module):
+class PAINNPrediction(Module):
     """PAINN (Polarizable Atomic Interaction Neural Network) as described in https://arxiv.org/pdf/2102.03150.
     """
     def __init__(self):
@@ -38,7 +38,7 @@ class MPAINNPrediction(Module):
         # return energy and force predictions
         return E_hat, F_hat
 
-class MPAINNMessage(MessagePassing):
+class PAINNMessage(MessagePassing):
     """message block, as in Figure 2b of https://arxiv.org/pdf/2102.03150.
     """
     def __init__(self):
@@ -115,7 +115,7 @@ class MPAINNMessage(MessagePassing):
         # return new embedding
         return x
 
-class MPAINNUpdate(MessagePassing):
+class PAINNUpdate(MessagePassing):
     """update block, as in Figure 2c of https://arxiv.org/pdf/2102.03150.
     """
     def __init__(self):
@@ -201,15 +201,15 @@ class MPAINNUpdate(MessagePassing):
         # return new embedding
         return x
 
-class MPAINNBlock(Module):
+class PAINNBlock(Module):
     """single message/update round, combining Figure 2b and Figure 2c in https://arxiv.org/pdf/2102.03150 for concision.
     """
     def __init__(self):
         super().__init__()
         
         # initialize constituent blocks
-        self.message = MPAINNMessage()
-        self.update = MPAINNUpdate()
+        self.message = PAINNMessage()
+        self.update = PAINNUpdate()
     
     def forward(self, x, edge_index, edge_attr1, edge_attr2):
         # call message passing functions
@@ -219,18 +219,18 @@ class MPAINNBlock(Module):
         # return updated embedding
         return x
 
-class MPAINN(Module):
+class Model(Module):
     def __init__(self):
         super().__init__()
         
         # embedding takes place outside all blocks
         self.embedding = Embedding(118,128)
         # 3 message/update rounds
-        self.block_1 = MPAINNBlock()
-        self.block_2 = MPAINNBlock()
-        self.block_3 = MPAINNBlock()
+        self.block_1 = PAINNBlock()
+        self.block_2 = PAINNBlock()
+        self.block_3 = PAINNBlock()
         # s goes through prediction head to give atomwise energy predictions, which are summed to give energy prediction for whole system
-        self.prediction = MPAINNPrediction()
+        self.prediction = PAINNPrediction()
     
     def forward(self, data):
         # get relevant parts from data

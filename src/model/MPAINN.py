@@ -219,7 +219,7 @@ class MPAINNBlock(Module):
         # return updated embedding
         return x
 
-class MPAINN(Module):
+class Model(Module):
     def __init__(self):
         super().__init__()
         

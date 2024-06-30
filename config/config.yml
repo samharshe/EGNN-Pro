@@ -1,4 +1,4 @@
-name: Delta
+name: delta
 
 hyperparameters:
     scheduler:

@@ -1,4 +1,4 @@
-import torch, wandb, hydra
+import torch, wandb, hydra, importlib
 from src.model.utils.data_get_utils import get_dataloaders
 from run.train import train
 from run.evaluate import evaluate
@@ -8,14 +8,16 @@ from hydra.core.hydra_config import HydraConfig
 
 @hydra.main(config_path="config", config_name="config.yml")
 def main(cfg: DictConfig):
-    # Convert DictConfig to a regular dictionary
+    # initialize star of show with  help of importlib, depending on cfg.name
+    model_module = importlib.import_module(f"src.model.{cfg.name}")
+    Model = getattr(model_module, "Model")  # name of relevant class will always be "Model"
+    model = Model()
+
+    # Convert DictConfig to a regular dictionary to make it nice for wandb
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)
     # initialize wandb
     wandb.init(project="EGNN", config=cfg_dict)
 
-    # initialize the star of the show
-    model = Delta()
-    
     # initialize optimizer, scheduler, loss function
     optimizer_class = getattr(torch.optim, cfg.hyperparameters.optimizer.name)
     optimizer = optimizer_class(model.parameters(), 

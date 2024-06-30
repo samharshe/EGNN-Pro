@@ -4,7 +4,7 @@ from torch_geometric.nn import global_add_pool
 from torch_geometric.nn.conv import MessagePassing
 from model_utils import gaussian_rbf
 
-class Beta(MessagePassing):
+class Model(MessagePassing):
     """fka EGNN2. 32-dimensional embedding with one round of message passing.
     """
     def __init__(self):

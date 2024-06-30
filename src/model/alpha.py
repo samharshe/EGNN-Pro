@@ -3,7 +3,7 @@ from torch_geometric.nn import GCNConv
 from torch.nn import Module, Embedding, Linear, LeakyReLU
 from torch_geometric.nn import global_add_pool
 
-class Alpha(Module):
+class Model(Module):
     """fka ToyGCN. 16-dimensional embedding with two GCN conv layers.
     """
     def __init__(self):

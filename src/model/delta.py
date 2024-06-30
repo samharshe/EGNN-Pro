@@ -4,7 +4,7 @@ from torch_geometric.nn import global_add_pool
 from torch_geometric.nn.conv import MessagePassing
 from .utils.model_utils import gaussian_rbf
 
-class Delta(MessagePassing):
+class Model(MessagePassing):
     """fka EGNN4. 64-dimensional embedding with SiLU activation and three rounds of message passing.
     """
     def __init__(self):
