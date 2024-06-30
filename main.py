@@ -1,7 +1,7 @@
 import torch, wandb, hydra
 from src.model.utils.data_get_utils import get_dataloaders
-from train import train
-from evaluate import evaluate
+from run.train import train
+from run.evaluate import evaluate
 from src.model.delta import Model
 from omegaconf import DictConfig, OmegaConf
 from hydra.core.hydra_config import HydraConfig
