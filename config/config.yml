@@ -1,5 +1,4 @@
 name: delta
-
 hyperparameters:
     scheduler:
       name: ReduceLROnPlateau
@@ -13,11 +12,10 @@ hyperparameters:
       batch_size: 32
       loss_fn:
         name: MSELoss
-        rho: !!float 1-1e-1
+        rho: 0.99
     optimizer:
       name: Adam
       base_learning_rate: 0.001
-    
 data:
   version: apricot
   molecule: benzene

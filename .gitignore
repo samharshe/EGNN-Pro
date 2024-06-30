@@ -1,6 +1,7 @@
 # too big to push to GitHub
-data/*
+data/
 
 # gross and annoying
 **/__pycache__/
 wandb/
+outputs/
