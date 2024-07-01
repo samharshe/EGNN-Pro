@@ -5,3 +5,9 @@ data/
 **/__pycache__/
 wandb/
 outputs/
+
+# for remote training
+file_list.txt
+
+# notes just for me
+scratch.txt

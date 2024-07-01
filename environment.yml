@@ -1,0 +1,12 @@
+name: GDL
+channels:
+  - defaults
+dependencies:
+  - pytorch-geometric
+  - ipykernel
+  - pytorch-cluster
+  - matplotlib
+  - numpy
+  - wandb
+  - hydra-core
+prefix: /usr/local/Caskroom/miniconda/base/envs/GDL
