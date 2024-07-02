@@ -54,7 +54,7 @@ class PAINNMessage(MessagePassing):
         
     def forward(self, x, edge_index, edge_attr1, edge_attr2):
         # message passing to update x, embedding vector
-        x = self.propagate(x=x, edge_index=edge_index, edge_attr1=edge_attr1, edge_attr2=edge_attr2)
+        x = self.propagate(edge_index=edge_index, edge_attr1=edge_attr1, edge_attr2=edge_attr2, x=x)
         
         # return updated embedding
         return x
@@ -134,7 +134,7 @@ class PAINNUpdate(MessagePassing):
     
     def forward(self, x, edge_index):
         # message passing to update x, embedding vector
-        x = self.propagate(x=x, edge_index=edge_index)
+        x = self.propagate(edge_index=edge_index, x=x)
         
         # return updated embedding
         return x
