@@ -11,6 +11,12 @@ def main(cfg: DictConfig):
     model_module = importlib.import_module(f"src.model.{cfg.name}")
     Model = getattr(model_module, "Model")  # name of relevant class will always be "Model"
     model = Model()
+    
+    # GPU compatibility
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model)
+    elif torch.cuda.device_count == 1:
+        model = model.to(device)
 
     # Convert DictConfig to a regular dictionary to make it nice for wandb
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)

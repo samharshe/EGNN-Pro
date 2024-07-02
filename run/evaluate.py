@@ -27,6 +27,9 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     # do not track gradients
     model.eval()
     
+    # GPU compatibility
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
     # test statistics using the same loss function as training
     losses = []
     E_losses = []
@@ -40,6 +43,9 @@ def evaluate(model: MessagePassing, loss_fn: Callable, test_dataloader: DataLoad
     
     # iterate through test_dataloader        
     for data in test_dataloader:
+        # GPU compatibility
+        data = data.to(device)
+        
         # target values
         E = data.energy
         F = data.force

@@ -34,7 +34,9 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
     """
     # keep track of the best val performance to know when to save weights
     val_min_loss = sys.float_info.max
-
+    
+    # GPU compatibility
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # training loop occurs num_epochs times
     for epoch in range(max_epochs):
@@ -49,6 +51,9 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         
         # iterate through test_dataloader        
         for data in train_dataloader:
+            # GPU compatibility
+            data = data.to(device)
+            
             # clear gradients
             optimizer.zero_grad()
 
