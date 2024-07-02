@@ -2,7 +2,7 @@
 data/
 
 # gross and annoying
-**/__pycache__/
+__pycache__/
 wandb/
 outputs/
 

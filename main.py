@@ -7,7 +7,7 @@ from hydra.core.hydra_config import HydraConfig
 
 @hydra.main(config_path="config", config_name="config.yml")
 def main(cfg: DictConfig):
-    # initialize star of show with  help of importlib, depending on cfg.name
+    # initialize star of show with help of importlib, depending on cfg.name
     model_module = importlib.import_module(f"src.model.{cfg.name}")
     Model = getattr(model_module, "Model")  # name of relevant class will always be "Model"
     model = Model()

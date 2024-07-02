@@ -32,7 +32,7 @@ def sanity_check(model: MessagePassing, rho:float=1-1e-2, num_items:int=1024, ba
     """
     
     # make dataloader
-    dataloader = get_mini_dataloader(version='apricot', molecule='benzene', num_items=1024, batch_size=32)
+    dataloader = get_mini_dataloader(version='apricot', molecule='benzene', num_items=num_items, batch_size=batch_size)
     
     # SGD for maximal simplicity
     optimizer = SGD(model.parameters(), lr=0.001)

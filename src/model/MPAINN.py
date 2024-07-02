@@ -49,8 +49,8 @@ class MPAINNMessage(MessagePassing):
         
         # `W• + b` layers of Figure 2b, proceeding top-to-bottom
         self.linear_1 = Linear(16,16)
-        self.linear_2 = Linear(20,48)
-        self.linear_3 = Linear(16,48)
+        self.linear_2 = Linear(20,16*3)
+        self.linear_3 = Linear(16,16*3)
         
     def forward(self, x, edge_index, edge_attr1, edge_attr2):
         # message passing to update x, embedding vector
@@ -129,8 +129,8 @@ class MPAINNUpdate(MessagePassing):
         self.V = Linear(16,16,bias=False)
         
         # linear layers with bias for invariant embeddings
-        self.linear_1 = Linear(32,16)
-        self.linear_2 = Linear(16,48)
+        self.linear_1 = Linear(16*2,16)
+        self.linear_2 = Linear(16,16*3)
     
     def forward(self, x, edge_index):
         # message passing to update x, embedding vector

@@ -4,7 +4,7 @@ from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.nn import global_add_pool
 from .utils.model_utils import bessel_rbf, cosine_cutoff
 
-# Mini PAINN
+# PAINN
 class PAINNPrediction(Module):
     """PAINN (Polarizable Atomic Interaction Neural Network) as described in https://arxiv.org/pdf/2102.03150.
     """
@@ -129,8 +129,8 @@ class PAINNUpdate(MessagePassing):
         self.V = Linear(128,128,bias=False)
         
         # linear layers with bias for invariant embeddings
-        self.linear_1 = Linear(256,128)
-        self.linear_2 = Linear(128,384)
+        self.linear_1 = Linear(128*2,128)
+        self.linear_2 = Linear(128,128*3)
     
     def forward(self, x, edge_index):
         # message passing to update x, embedding vector

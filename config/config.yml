@@ -1,4 +1,4 @@
-name: delta
+name: MPAINN
 hyperparameters:
     scheduler:
       name: ReduceLROnPlateau
