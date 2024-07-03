@@ -49,6 +49,6 @@ class MakeEdgeAttributes(T.BaseTransform):
 
 transform = T.Compose([RadiusGraph(1.8100), NormalizeScale(), DoubleDistance(), NormalizeEnergy(), NormalizeForce(), MakeEdgeAttributes()])
 
-benzene_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/charizard/', name='benzene', pre_transform=transform)
-uracil_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/charizard/', name='uracil', pre_transform=transform)
-aspirin_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/charizard/', name='aspirin', pre_transform=transform)
+benzene_dataset = MD17(root='data/apricot/', name='benzene', pre_transform=transform)
+uracil_dataset = MD17(root='data/apricot/', name='uracil', pre_transform=transform)
+aspirin_dataset = MD17(root='data/apricot/', name='aspirin', pre_transform=transform)

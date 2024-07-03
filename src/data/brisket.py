@@ -36,6 +36,6 @@ class DoubleDistance(T.BaseTransform):
 
 transform = T.Compose([NormalizeScale(), DoubleDistance(), NormalizeEnergy(), NormalizeForce()])
 
-benzene_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/brisket/', name='benzene', pre_transform=transform)
-uracil_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/brisket/', name='uracil', pre_transform=transform)
-aspirin_dataset = MD17(root='/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/brisket/', name='aspirin', pre_transform=transform)
+benzene_dataset = MD17(root='data/apricot/', name='benzene', pre_transform=transform)
+uracil_dataset = MD17(root='data/apricot/', name='uracil', pre_transform=transform)
+aspirin_dataset = MD17(root='data/apricot/', name='aspirin', pre_transform=transform)
