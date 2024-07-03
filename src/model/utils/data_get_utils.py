@@ -6,7 +6,18 @@ from torch.utils.data import random_split
 from typing import Tuple
 import os #:(
     
-def get_data_path(version: str):
+def get_data_path(version: str) -> str:
+    """returns path to `data/{version}` folder relative to present file (`data_get_utils.py`).
+    
+    parameters
+    ----------
+    version : str
+         which of the pre-processed datasets (raw, apricot, brisket, etc.) whose path is to fetch.
+    
+    returns
+    -------
+    string containing path to relevant folder within `data`, regardless of file architecture on machine and regardless of location of operative script.
+    """
     script_dir = os.path.dirname(os.path.abspath(__file__))
     great_grandparent = os.path.dirname(os.path.dirname(os.path.dirname(script_dir)))
     full_path = os.path.join(great_grandparent, f'data/{version}')
@@ -60,7 +71,7 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
     # return DataLoaders
     return train_loader, val_loader, test_loader
 
-def get_datasets(version: str, molecule: str, train_split: float, val_split: float, test_split: float) -> Tuple[Dataset, ...]:
+def get_datasets(version: str, molecule: str, train_split: float, val_split: float, test_split: float) -> Tuple[Dataset, Dataset, Dataset]
     """returns a 3-tuple of train, val, and test Dataset objects as specified in function call.
     
     parameters
