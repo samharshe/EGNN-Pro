@@ -1,4 +1,4 @@
-name: delta
+name: PAINN
 hyperparameters:
     scheduler:
       name: ReduceLROnPlateau

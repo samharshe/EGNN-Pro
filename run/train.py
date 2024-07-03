@@ -53,6 +53,7 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
         for data in train_dataloader:
             # GPU compatibility
             data = data.to(device)
+            print(data)
             
             # clear gradients
             optimizer.zero_grad()

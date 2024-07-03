@@ -34,8 +34,8 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
     assert train_split + val_split + test_split == 1, f"train_split, val_split, and test_split must sum to 1. got: {train_split + val_split + test_split}."
     
     # load in dataset
-    dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
-
+    dataset = MD17(root=f'data/{version}/', name=f'{molecule}')
+    
     # split defined by the argument of function
     train_size = int(train_split * len(dataset))
     val_size = int(val_split * len(dataset))
@@ -79,8 +79,8 @@ def get_datasets(version: str, molecule: str, train_split: float, val_split: flo
     assert train_split + val_split + test_split == 1, f"train_split, val_split, and test_split must sum to 1. got: {train_split + val_split + test_split}"
     
     # load in dataset
-    dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
-
+    dataset = MD17(root=f'data/{version}/', name=f'{molecule}')
+    
     # split defined by argument of function
     train_size = int(train_split * len(dataset))
     val_size = int(val_split * len(dataset))
@@ -110,7 +110,7 @@ def get_dataset(version: str, molecule: str) -> Dataset:
     manual_seed(2002)
     
     # load in dataset
-    dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
+    dataset = MD17(root=f'data/{version}/', name=f'{molecule}')
 
     # return Dataset
     return dataset
@@ -137,7 +137,7 @@ def get_mini_dataloader(version: str, molecule: str, num_items: int, batch_size:
     manual_seed(2002)
     
     # load in the dataset
-    dataset = MD17(root=f'/Users/samharshe/Documents/Gerstein Lab/EGNN Pro/data/{version}/', name=f'{molecule}')
+    dataset = MD17(root=f'data/{version}/', name=f'{molecule}')
 
     # make mini_dataset out of dataset
     mini_dataset, _ = random_split(dataset, [num_items, len(dataset)-num_items])

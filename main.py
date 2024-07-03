@@ -21,7 +21,7 @@ def main(cfg: DictConfig):
     # Convert DictConfig to a regular dictionary to make it nice for wandb
     cfg_dict = OmegaConf.to_container(cfg, resolve=True)
     # initialize wandb
-    wandb.init(project="EGNN", config=cfg_dict)
+    wandb.init(project="EGNN Remote", config=cfg_dict)
 
     # initialize optimizer, scheduler, loss function
     optimizer_class = getattr(torch.optim, cfg.hyperparameters.optimizer.name)
