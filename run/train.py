@@ -86,7 +86,7 @@ def train(model: MessagePassing, optimizer: Optimizer, scheduler: LRScheduler, l
                 wandb.log({"train_losses": loss.item(), "E_train_losses": E_loss.item(), "F_train_losses": F_loss.item(), "learning_rates": optimizer.param_groups[0]['lr']})
             batch_counter+=1
             batch_counter%=100
-        
+            
         # VAL
         epoch_losses = []
         epoch_E_losses = []
