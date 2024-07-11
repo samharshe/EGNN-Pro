@@ -14,7 +14,7 @@ def main(cfg: DictConfig):
     
     # GPU compatibility
     if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model)
+        model = torch.nn.DataParallel(model) # deprecated; use DDP (but non-trivial); use Torch Lightning
     elif torch.cuda.device_count == 1:
         model = model.to(device)
 

@@ -71,7 +71,7 @@ def get_dataloaders(version: str, molecule: str, train_split: float, val_split: 
     # return DataLoaders
     return train_loader, val_loader, test_loader
 
-def get_datasets(version: str, molecule: str, train_split: float, val_split: float, test_split: float) -> Tuple[Dataset, Dataset, Dataset]
+def get_datasets(version: str, molecule: str, train_split: float, val_split: float, test_split: float) -> Tuple[Dataset, Dataset, Dataset]:
     """returns a 3-tuple of train, val, and test Dataset objects as specified in function call.
     
     parameters
