@@ -3,7 +3,6 @@ import torch
 from torch_geometric.datasets import MD17
 import torch_geometric.transforms as T
 from torch_geometric.transforms import RadiusGraph, NormalizeScale
-import os
 
 # minumum energy in benzene, uracil, and aspirin datasets is -406757.5938
 max_abs_energy = -406757.5938
